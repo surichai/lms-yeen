@@ -41,8 +41,8 @@ AppAsset::register($this);
         if (Yii::$app->user->isGuest) {
             $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
         } else {
-            $menuItems[] = ['label' => 'ตรวจสอบผู้สอบ', 'url' => ['/site/login']];
-            $menuItems[] = ['label' => 'จัดการข้อมูลห้องสอบ', 'url' => ['/site/login']];
+            $menuItems[] = ['label' => 'ตรวจสอบผู้สอบ', 'url' => ['/map-room']];
+            $menuItems[] = ['label' => 'จัดการข้อมูลห้องสอบ', 'url' => ['/room']];
 
             $menuItems[] = '<li>'
                 . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])

@@ -14,9 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Map Room', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -30,8 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'user_id',
             'room_id',
-            'created_at',
-            'updated_at',
+            'code_lock',
+            'status',
+            //'created_at',
+            //'updated_at',
+            //'created_by',
+            //'updated_by',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

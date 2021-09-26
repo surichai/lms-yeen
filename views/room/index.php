@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\RoomSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Rooms';
+$this->title = 'ห้องสอบ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="room-index">
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Room', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('สร้างห้อง', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
@@ -27,13 +27,31 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            // 'id',
             'name',
-            'period',
-            'created_at',
-            'updated_at',
+            [ // รวมคอลัมน์
+                'attribute' => 'status',
+                // 'format' => 'html',
+                'value' => function ($model, $key, $index, $column) {
+                    return $model->status ===1?'เปืดใช้งาน':'ปิดใช้งาน';
+                }
+            ],
+            'link',
+            'created_at:date:วันที่สร้าง',
+            //'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'contentOptions' => [
+                    'noWrap' => true
+                ],
+                'template' => ' {view} {update} {delete}',
+                'buttons' => [
+                    'copy' => function ($url, $model, $key) {
+                        return Html::a('<i class="glyphicon glyphicon-off">test</i>', $url);
+                    }
+                ]
+            ],
         ],
     ]); ?>
 

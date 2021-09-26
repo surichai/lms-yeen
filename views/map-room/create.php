@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -13,8 +14,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+    <!-- <?= $this->render('_form', [
+                'model' => $model,
+            ]) ?> -->
+
+    <?php $form = ActiveForm::begin([
+        'options' => ['enctype' => 'multipart/form-data']
+    ]); ?>
+    <?= $form->field($model, 'file')->fileInput() ?>
+    <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+
+    <?php ActiveForm::end(); ?>
 
 </div>

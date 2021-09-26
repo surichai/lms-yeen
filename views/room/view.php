@@ -29,9 +29,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+            // 'id',
             'name',
-            'period',
+            [ // รวมคอลัมน์
+                'attribute' => 'status',
+                // 'format' => 'html',
+                'value' => function ($model, $key, $index, $column) {
+                    return $model->status === 1 ? 'เปืดใช้งาน' : 'ปิดใช้งาน';
+                }
+            ],
+            'link',
             'created_at',
             'updated_at',
         ],

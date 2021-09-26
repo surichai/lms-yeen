@@ -17,8 +17,8 @@ class RoomSearch extends Room
     public function rules()
     {
         return [
-            [['id', 'period', 'created_at', 'updated_at'], 'integer'],
-            [['name'], 'safe'],
+            // [['id', 'period', 'created_at', 'updated_at'], 'integer'],
+            [['name','link'], 'safe'],
         ];
     }
 
@@ -59,7 +59,10 @@ class RoomSearch extends Room
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            // 'status' => $this->status,
+            'link' => $this->link,
             'period' => $this->period,
+
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);

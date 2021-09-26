@@ -7,11 +7,10 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\User */
 /* @var $form yii\widgets\ActiveForm */
 
-$items=[
- '1'=>'สมาชิก',
-  '2'=>'แอดมิน',
+$items = [
+    '1' => 'สมาชิก',
+    '2' => 'แอดมิน',
     '3' => 'Super แอดมิน',
-
 ]
 ?>
 

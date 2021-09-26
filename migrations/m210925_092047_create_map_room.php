@@ -20,8 +20,12 @@ class m210925_092047_create_map_room extends Migration
             'id' => $this->primaryKey(),
             'user_id'=> $this->integer(),
             'room_id'=> $this->integer(),
+            'code_lock' => $this->integer(),
+            'status' => $this->integer(),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
         ], $tableOptions);
     }
 

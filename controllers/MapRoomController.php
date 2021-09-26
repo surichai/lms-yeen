@@ -4,9 +4,13 @@ namespace app\controllers;
 
 use app\models\MapRoom;
 use app\models\MapRoomSearch;
+use app\models\User;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Json;
+use yii\web\UploadedFile;
 
 /**
  * MapRoomController implements the CRUD actions for MapRoom model.
@@ -68,19 +72,77 @@ class MapRoomController extends Controller
     {
         $model = new MapRoom();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
+        var_dump(
+            $this->request->post());
+            exit();
+        // if ($this->request->isPost) {
+        //     if ($model->load($this->request->post()) && $model->save()) {
+        //         return $this->redirect(['view', 'id' => $model->id]);
+        //     }
+        // } else {
+        //     $model->loadDefaultValues();
+        // }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        // return $this->render('create', [
+        //     'model' => $model,
+        // ]);
+    }
+    
+
+    public function actionExamBehavior(){
+
+        $message =[
+
+        ];
+       $randomCode = rand(1000, 9999);
+        // User::findOne(condition)
+        // exit();
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+       if($this->request->post()){
+           $post = $this->request->post();
+           $user= User::findOne($post['userId']);
+           $map_room = MapRoom::findOne(['user_id'=> $user->id]);
+
+           if(!$map_room->code_lock){
+                $map_room->code_lock = $randomCode;
+                $map_room->save();
+                $message = [
+                    'status' => 'create lock success',
+                    'lock' => true
+                ];
+            }else{
+                $message = [
+                    'status' => 'not',
+                    'lock' => true
+                ];
+            }
+            // Json::decode($this->request->post(),true);
+       }
+        return $message;
     }
 
+
+    public function actionExamStatus()
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $message = [];
+        if ($this->request->post()) {
+            $post = $this->request->post();
+            $userId = $post['userId'];
+            $map_room = MapRoom::findOne(['user_id' => $userId]);
+            if($map_room->status != 1){
+                $message = [
+                    'end_exam'=>false
+                ];
+            }else{
+                $message = [
+                    'end_exam' => true
+                ];
+            }
+        }
+        return   $message;
+    }
     /**
      * Updates an existing MapRoom model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -130,4 +192,26 @@ class MapRoomController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+
+    public $uploadPath = 'uploads/file';
+   
+
+    public function uploadFile($model, $attribute)
+    {
+        $file = UploadedFile::getInstance($model, $attribute);
+
+        if ($file) {
+            if ($this->isNewRecord) {
+                $fileName = time() . '_' . $file->baseName . '.' . $file->extension;
+            } else {
+                $fileName = $this->getOldAttribute($attribute);
+            }
+            $file->saveAs(Yii::getAlias('@webroot') . '/' . $this->uploadPath . '/' . $fileName);
+
+            return $fileName;
+        }
+        return $this->isNewRecord ? false : $this->getOldAttribute($attribute);
+    }
+
 }

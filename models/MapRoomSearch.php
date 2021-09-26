@@ -17,7 +17,9 @@ class MapRoomSearch extends MapRoom
     public function rules()
     {
         return [
-            [['id', 'user_id', 'room_id', 'created_at', 'updated_at'], 'integer'],
+            [['id',
+            'file',
+            'user_id', 'room_id', 'code_lock', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
         ];
     }
 
@@ -60,8 +62,12 @@ class MapRoomSearch extends MapRoom
             'id' => $this->id,
             'user_id' => $this->user_id,
             'room_id' => $this->room_id,
+            'code_lock' => $this->code_lock,
+            'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'created_by' => $this->created_by,
+            'updated_by' => $this->updated_by,
         ]);
 
         return $dataProvider;
